@@ -1,0 +1,185 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Type ─────────────────────────────────────────────── */
+  --font-display: var(--font-archivo);
+  --font-hand: var(--font-caveat);
+  --font-mono: var(--font-geist-mono);
+
+  /* ── Color ────────────────────────────────────────────── */
+  --color-white: #faf9f7;
+  --color-white-deep: #f2f0ec;
+  --color-white-line: #e1ded6;
+  --color-white-mute: #6f6a63;
+  --color-white-faint: #9b968e;
+
+  --color-ink: #0d0c0c;
+  --color-ink-soft: #161514;
+  --color-ink-line: rgba(250, 249, 247, 0.14);
+  --color-ink-line-strong: rgba(250, 249, 247, 0.28);
+  --color-ink-mute: #b3aea5;
+  --color-ink-faint: #6f6b66;
+
+  --color-orange: #dc3f1a;
+  --color-orange-deep: #a62808;
+  --color-orange-bright: #f06c3c;
+  --color-orange-soft: rgba(220, 63, 26, 0.09);
+  --color-orange-glow: rgba(220, 63, 26, 0.22);
+
+  /* ── Motion ────────────────────────────────────────────── */
+  --ease-out-cube: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-cube: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-physical: cubic-bezier(0.16, 1.2, 0.3, 1);
+}
+
+:root {
+  --background: var(--color-white);
+  --foreground: var(--color-ink);
+}
+
+html {
+  scroll-behavior: initial;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-orange);
+  color: var(--color-ink);
+}
+
+/* Custom cursor — hide native pointer on fine pointers */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+/* ── Utilities ─────────────────────────────────────────── */
+
+@utility container-x {
+  padding-inline: clamp(1.25rem, 5vw, 4.5rem);
+}
+
+@utility hand {
+  font-family: var(--font-hand);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* Small printed studio label — Archivo, tight, uppercase */
+@utility small-label {
+  font-size: 0.6875rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+@utility reveal-mask {
+  display: block;
+  overflow: hidden;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* First-principles stages: silent → ink → orange (decision) */
+.fp-stage .fp-word {
+  color: var(--color-white-faint);
+  transition: color 0.7s var(--ease-out-cube);
+}
+.fp-stage.fp-on .fp-word {
+  color: var(--color-ink);
+}
+.fp-stage.fp-on.fp-orange .fp-word {
+  color: var(--color-orange-deep);
+}
+
+/* ── Keyframes ─────────────────────────────────────────── */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes blink-caret {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+
+@keyframes drum {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.14em);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* ── Reduced motion ────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* fp stages must be readable without scroll-driven reveal */
+  .fp-stage .fp-word {
+    color: var(--color-ink);
+  }
+}
