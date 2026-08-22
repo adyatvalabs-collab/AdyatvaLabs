@@ -2,9 +2,13 @@
   "$schema": "https://unpkg.com/wrangler/config-schema.json",
   "name": "adyatvalabs",
   "compatibility_date": "2026-08-20",
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "adyatvalabs.com", "custom_domain": true },
+    { "pattern": "www.adyatvalabs.com", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./out",
-    "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   }
 }
