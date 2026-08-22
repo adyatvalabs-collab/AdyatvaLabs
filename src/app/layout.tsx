@@ -26,11 +26,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ADYATVA LABS — The first principles studio",
+  metadataBase: new URL("https://adyatvalabs.com"),
+  title: {
+    default: "ADYATVA LABS — The first principles studio",
+    template: "%s | ADYATVA LABS",
+  },
   description:
     "We don't start with the solution. We start with the problem. Brand. Content. Distribution. Systems. Products. Think from first principles, build with precision, execute deliberately.",
   keywords: [
-    "first principles",
+    "Adyatva Labs",
+    "Adyatva",
+    "adyatvalabs",
+    "first principles studio",
     "strategy studio",
     "branding",
     "content",
@@ -43,12 +50,30 @@ export const metadata: Metadata = {
     "Werkz de Square",
     "Mount",
   ],
-  metadataBase: new URL("https://adyatva.com"),
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
   openGraph: {
     title: "ADYATVA LABS — The first principles studio",
     description:
       "We don't start with the solution. We start with the problem.",
+    url: "https://adyatvalabs.com",
+    siteName: "ADYATVA LABS",
     type: "website",
+    locale: "en_IN",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "ADYATVA LABS — The first principles studio" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ADYATVA LABS — The first principles studio",
+    description:
+      "We don't start with the solution. We start with the problem.",
+    images: ["/og-image.png"],
   },
 };
 
@@ -69,6 +94,22 @@ export default function RootLayout({
       className={`${archivo.variable} ${caveat.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-white text-ink">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "ADYATVA LABS",
+              alternateName: ["Adyatva Labs", "Adyatva", "adyatvalabs"],
+              url: "https://adyatvalabs.com",
+              logo: "https://adyatvalabs.com/og-image.png",
+              description:
+                "The first principles studio. Brand, content, distribution, systems and products — think from first principles, build with precision, execute deliberately.",
+              email: "ceo@adyatvalabs.com",
+            }),
+          }}
+        />
         <SmoothScroll>
           <Cursor />
           <Navigation />
